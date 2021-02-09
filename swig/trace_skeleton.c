@@ -627,9 +627,9 @@ polyline_t* polylines = NULL;
 void trace(char* img, int w, int h){
   W = w;
   H = h;
-  if (im){
-    free(im);
-  }
+  // if (im){
+  //   free(im);
+  // }
   destroy_polylines(polylines);
   destroy_rects();
 
