@@ -260,7 +260,7 @@ int thinning_zs_iteration(int iter) {
       int p7 = im[(i+1)*W+j-1] & 1;
       int p8 = im[(i)*W+j-1]   & 1;
       int p9 = im[(i-1)*W+j-1] & 1;
-      
+
       int A  = (p2 == 0 && p3 == 1) + (p3 == 0 && p4 == 1) +
         (p4 == 0 && p5 == 1) + (p5 == 0 && p6 == 1) +
         (p6 == 0 && p7 == 1) + (p7 == 0 && p8 == 1) +
@@ -311,10 +311,10 @@ int not_empty(int x, int y, int w, int h){
  * @param c1i  ith fragment of second chunk
  * @param sx   (x or y) coordinate of the seam
  * @param isv  is vertical, not horizontal?
- * @param mode 2-bit flag, 
+ * @param mode 2-bit flag,
  *             MSB = is matching the left (not right) end of the fragment from first  chunk
  *             LSB = is matching the right (not left) end of the fragment from second chunk
- * @return     matching successful?             
+ * @return     matching successful?
  */
 int merge_impl(polyline_t* c0, polyline_t* c1i, int sx, int isv, int mode){
   int b0 = (mode >> 1 & 1)>0; // match c0 left
@@ -355,7 +355,7 @@ int merge_impl(polyline_t* c0, polyline_t* c1i, int sx, int isv, int mode){
       reverse_polyline(c1i);
       cat_tail_polyline(c0j,c1i);
     }
-    return 1;    
+    return 1;
   }
   return 0;
 }
@@ -385,7 +385,7 @@ polyline_t* merge_frags(polyline_t* c0, polyline_t* c1, int sx, int dr){
       if (merge_impl(c0,it,sx,1,1))goto rem;
       if (merge_impl(c0,it,sx,1,3))goto rem;
       if (merge_impl(c0,it,sx,1,0))goto rem;
-      if (merge_impl(c0,it,sx,1,2))goto rem;      
+      if (merge_impl(c0,it,sx,1,2))goto rem;
     }
     goto next;
     rem:
@@ -431,7 +431,7 @@ polyline_t* chunk_to_frags(int x, int y, int w, int h){
   int fsize = 0;
   int on = 0; // to deal with strokes thicker than 1px
   int li=-1, lj=-1;
-  
+
   // walk around the edge clockwise
   for (int k = 0; k < h+h+w+w-4; k++){
     int i, j;
@@ -440,7 +440,7 @@ polyline_t* chunk_to_frags(int x, int y, int w, int h){
     }else if (k < w+h-1){
       i = y+k-w+1; j = x+w-1;
     }else if (k < w+h+w-2){
-      i = y+h-1; j = x+w-(k-w-h+3); 
+      i = y+h-1; j = x+w-(k-w-h+3);
     }else{
       i = y+h-(k-w-h-w+4); j = x+0;
     }
@@ -476,7 +476,7 @@ polyline_t* chunk_to_frags(int x, int y, int w, int h){
     // use convolution to find brightest blob
     for (int i = y+1; i < y+h-1; i++){
       for (int j = x+1; j < x+w-1; j++){
-        int s = 
+        int s =
           (im[i*W-W+j-1]) + (im[i*W-W+j]) + (im[i*W-W+j-1+1])+
           (im[i*W+j-1]  ) +   (im[i*W+j]) +   (im[i*W+j+1]  )+
           (im[i*W+W+j-1]) + (im[i*W+W+j]) + (im[i*W+W+j+1]  );
@@ -522,7 +522,7 @@ polyline_t* chunk_to_frags(int x, int y, int w, int h){
 polyline_t* trace_skeleton(int x, int y, int w, int h, int iter){
 
   polyline_t* frags = NULL;
-  
+
   if (iter >= SKEL__MAX_ITER){ // gameover
     return frags;
   }
@@ -530,12 +530,12 @@ polyline_t* trace_skeleton(int x, int y, int w, int h, int iter){
     frags = chunk_to_frags(x,y,w,h);
     return frags;
   }
-  
+
 
   int ms = W+H; // number of white pixels on the seam, less the better
   int mi = -1; // horizontal seam candidate
   int mj = -1; // vertical   seam candidate
-  
+
   if (h > SKEL__CHUNK_SIZE){ // try splitting top and bottom
     for (int i = y+3; i < y+h-3; i++){
       if (im[i*W+x] ||im[(i-1)*W+x] ||im[i*W+x+w-1] ||im[(i-1)*W+x+w-1]){
@@ -638,7 +638,7 @@ void trace(char* img, int w, int h){
   // print_bitmap();
   thinning_zs();
   // print_bitmap();
-  
+
   polylines = trace_skeleton(0,0,W,H,0);
   // print_polylines(polylines);
 
@@ -659,7 +659,7 @@ int pop_point(){
   point_t* p = polylines->head;
 
   int i = (p->y * W) + p->x;
- 
+
   if (p->next){
     polylines->head = p->next;
     polylines->size --;
