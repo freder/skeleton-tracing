@@ -11,7 +11,8 @@ int len_polyline();
 
 %pythoncode %{
 csizeDefault = 10
-maxIterDefault = 0
+maxIterDefault = 999
+
 def from_list(arr, w, h, csize=csizeDefault, maxIter=maxIterDefault):
 	im = "".join(['\0' if x == 0 else '\1' for x in arr])
 	trace(im, w, h, csize, maxIter)
