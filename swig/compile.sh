@@ -4,10 +4,10 @@ baseDir=/Users/freder/miniconda3/envs/landscape/
 
 gcc -Wall -O3 \
 	-c trace_skeleton.c trace_skeleton_wrap.c \
-	-I $baseDir/include/python3.9/
+	-I $baseDir/include/python3.8/
 
 gcc $(python3-config --ldflags) \
-	-I $baseDir/lib/libpython3.9.dylib \
+	-I $baseDir/lib/libpython3.8.dylib \
 	-undefined dynamic_lookup -dynamiclib *.o \
 	-o _trace_skeleton.so
 
